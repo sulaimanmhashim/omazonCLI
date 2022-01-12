@@ -13,15 +13,15 @@ public class Product implements Serializable{
     private String[] reviews;
     private Boolean bestSelling;
     //----------------------------------\\
-    public Product(String productName, String description, Double price, int stockCount, int salesCount, String[] reviews, Boolean bestSelling) {
+    public Product(String productName, String description, Double price, int stockCount, int salesCount) {
         this.productName = productName;
 
         this.description = description;
         this.price = price;
         this.stockCount = stockCount;
         this.salesCount = salesCount;
-        this.reviews = reviews;
-        this.bestSelling = bestSelling;
+     //   this.reviews = reviews;
+    //    this.bestSelling = bestSelling;
 
     }
     //saveToFile

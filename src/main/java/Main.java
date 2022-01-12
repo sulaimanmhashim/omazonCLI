@@ -2,6 +2,8 @@ import java.io.File;
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
+        Product product = new Product("Test","Description", 50.5, 2500, 0);
+        Product.SaveToFile(product);
         User activeUser = greetingscreen();
         System.out.println(activeUser.getUsername()+" is logged in.");
     }
