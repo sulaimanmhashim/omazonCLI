@@ -1,11 +1,19 @@
 import java.io.File;
 import java.util.Scanner;
 public class Main {
+    public static boolean loggedIn=false;
+    public static User activeUser = greetingscreen();
+
     public static void main(String[] args) {
         Product product = new Product("Test","Description", 50.5, 2500, 0);
         Product.SaveToFile(product);
-        User activeUser = greetingscreen();
+
         System.out.println(activeUser.getUsername()+" is logged in.");
+        mainscreen();
+        while(loggedIn){
+            //do code
+        }
+
     }
     public static User greetingscreen(){
         Scanner s = new Scanner(System.in);
@@ -39,9 +47,11 @@ public class Main {
         for(File fileEntry : folder.listFiles()){
             User u = (User) User.ReadFromFile(fileEntry.getAbsolutePath());
             if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
+                    loggedIn=true;
                     return u;
             }else{
                 System.out.println("Wrong username or password!");
+                loggedIn=false;
             }
 
         }
@@ -69,5 +79,10 @@ public class Main {
 
 
 
+    }
+    public static void mainscreen(){
+        System.out.println("\t\t\t\t**==============================================================**");
+        System.out.println("\t\t\t\t Welcome "+activeUser.getUsername()+"! Please enjoy your stay!");
+        System.out.println("\t\t\t\t**==============================================================**");
     }
 }
