@@ -3,11 +3,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         User activeUser = greetingscreen();
-        System.out.println(activeUser.getUsername()+" is loggeed in.");
+        System.out.println(activeUser.getUsername()+" is logged in.");
     }
     public static User greetingscreen(){
         Scanner s = new Scanner(System.in);
-        User blankUser = new User("Blank","blank", "blankk");
+        User blankUser = new User("Guest","Guest", "Guest");
         System.out.println("\t\t\t\t============================================");
         System.out.println("\t\t\t\t Welcome user! Please login or register");
         System.out.println("\t\t\t\t 1. Login");
@@ -36,11 +36,10 @@ public class Main {
         File folder = new File("C:\\Testu\\USERNAMES");
         for(File fileEntry : folder.listFiles()){
             User u = (User) User.ReadFromFile(fileEntry.getAbsolutePath());
-            if(username.equals(u.getUsername())) {
-                if(password.equals(u.getPassword())){
+            if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
                     return u;
-                }
-
+            }else{
+                System.out.println("Wrong username or password!");
             }
 
         }

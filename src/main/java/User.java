@@ -37,7 +37,7 @@ public class User implements Serializable{
     }
     public static void SaveToFile(User u){   //add filepath as a parameter
         try{
-            FileOutputStream fileOut = new FileOutputStream("C:\\Test\\USERNAMES\\"+u.Username);
+            FileOutputStream fileOut = new FileOutputStream("C:\\Testu\\USERNAMES\\"+u.Username);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(u);
             objectOut.close();
