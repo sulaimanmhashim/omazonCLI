@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.io.IOException;
 public class Main {
     public static boolean loggedIn=false;
+    public static boolean selling=false;
     public static User activeUser = greetingscreen();
     //todo: implement categories(!)
     public static void main(String[] args) {
@@ -12,17 +13,19 @@ public class Main {
         mainscreen();
         while(loggedIn){
             System.out.println("\t\t\t\t**==============================================================**");
-            System.out.println("\t\t\t\t Welcome user!");
+            System.out.println("\t\t\t\t Current user: "+activeUser.getUsername()+"!");
             System.out.println("\t\t\t\t 1. Sell product");
             System.out.println("\t\t\t\t 2. Buy product");
             System.out.println("\t\t\t\t 3. List products");
-            System.out.println("\t\t\t\t 4. EXIT");
+            System.out.println("\t\t\t\t 4. Check balance");
+            System.out.println("\t\t\t\t 0. EXIT");
             System.out.println("\t\t\t\t**==============================================================**");
             String answer = s.next();
             if(answer.equals("1")){
+                selling=true;
                 sell();
             }
-            if(answer.equals("4")){
+            if(answer.equals("0")){
                 loggedIn=false;
             }
 
@@ -100,7 +103,7 @@ public class Main {
         System.out.println("\t\t\t\t**==============================================================**");
     }
     public static void sell(){
-        while(loggedIn) {
+        while(loggedIn&&selling) {
             Scanner s = new Scanner(System.in);
             System.out.println("\t\t\t\t**==============================================================**");
             System.out.println("\t\t\t\t Welcome user to the seller perspective!");
@@ -179,6 +182,9 @@ public class Main {
 
                 }
 
+            }
+            if(answer.equals("4")){
+                selling=false;
             }
 
         }
