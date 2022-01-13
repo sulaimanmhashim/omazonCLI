@@ -100,8 +100,9 @@ public class Main {
             System.out.println("\t\t\t\t Welcome user to the seller perspective!");
             System.out.println("\t\t\t\t 1. Put up product");
             System.out.println("\t\t\t\t 2. View existing listings");
-            System.out.println("\t\t\t\t 3. Go back");
-            System.out.println("\t\t\t\t 4. Exit");
+            System.out.println("\t\t\t\t 3. Edit existing listings");
+            System.out.println("\t\t\t\t 4. Go back");
+            System.out.println("\t\t\t\t 5. Exit");
             System.out.println("\t\t\t\t**==============================================================**");
             String answer = s.next();
             if(answer.equals("1")){
@@ -127,14 +128,51 @@ public class Main {
             }
             if(answer.equals("2")){
                 File folder = new File("C:\\Testu\\PRODUCTS");
-                System.out.println("=======BELOW LIE YOUR PRODUCTS=========");
+                System.out.println("\t\t\t\t =======BELOW LIE YOUR PRODUCTS=========");
 
                 for(File fileEntry : folder.listFiles()){
                     Product p = Product.ReadFromFile(fileEntry.getAbsolutePath());
                     if(p.getOwnerName().equals(activeUser.getUsername()))
                     System.out.println(p.getProductName());
                 }
-                s.nextLine();
+
+            }
+            if(answer.equals("3")){
+                File folder = new File("C:\\Testu\\PRODUCTS");
+                System.out.println("\t\t\t\t =======BELOW LIE YOUR PRODUCTS=========");
+                Scanner scanner = new Scanner(System.in);
+                String ans;
+                for(File fileEntry : folder.listFiles()){
+                    Product p = Product.ReadFromFile(fileEntry.getAbsolutePath());
+                    if(p.getOwnerName().equals(activeUser.getUsername()))
+                        System.out.println(p.getProductName());
+                }
+                System.out.println("\t\t\t\t =======WRITE THE FULL NAME OF PRODUCT TO EDIT=========");
+                ans = s.next();
+                for(File fileEntry : folder.listFiles()){
+                    Product p = Product.ReadFromFile(fileEntry.getAbsolutePath());
+                    if(p.getOwnerName().equals(activeUser.getUsername()) && p.getProductName().equals(ans)){
+                        String description;
+                        double price;
+                        int stockCount;
+
+                        System.out.println("Please type the product description:");
+                        description = s.next();
+                        System.out.println("Please type the product price:");
+                        price = Double.parseDouble(s.next());
+                        System.out.println("Please type the product stock count:");
+                        stockCount = Integer.parseInt(s.next());
+                        p.setDescription(description);
+                        p.setPrice(price);
+                        p.setStockCount(stockCount);
+                        Product.SaveToFile(p);
+
+
+
+                    }
+
+                }
+
             }
 
         }
