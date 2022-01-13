@@ -12,14 +12,19 @@ public class Product implements Serializable{
     private int salesCount;
     private String[] reviews;
     private Boolean bestSelling;
+
+
+
+    private String ownerName;
     //----------------------------------\\
-    public Product(String productName, String description, Double price, int stockCount, int salesCount) {
+    public Product(String productName, String description, Double price, int stockCount, int salesCount, String ownerName) {
         this.productName = productName;
 
         this.description = description;
         this.price = price;
         this.stockCount = stockCount;
         this.salesCount = salesCount;
+        this.ownerName = ownerName;
      //   this.reviews = reviews;
     //    this.bestSelling = bestSelling;
 
@@ -104,6 +109,13 @@ public class Product implements Serializable{
 
     public void setBestSelling(Boolean bestSelling) {
         this.bestSelling = bestSelling;
+    }
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
 

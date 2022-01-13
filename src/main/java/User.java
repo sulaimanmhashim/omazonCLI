@@ -1,5 +1,7 @@
 
 import java.io.*;
+import java.util.ArrayList;
+
 public class User implements Serializable{
     //Basic info
     private String Username;
@@ -10,18 +12,20 @@ public class User implements Serializable{
     private Product[] cartProduct;
     private String[] orderHistory;
     private int paymentPassword;
+
+    private int ProductCount=0;
     //Seller
     private double profit;
-    private Product[] productsList;
+    private Product[] productsList= new Product[100];
+  //  private Product[] productsList;
     private String[] transactionHistory;
     private String[] orderNotifications;
+    private static final long serialVersionUID = 1L;
 
     public User(String Username,String Password,String email) {
         this.Username=Username;
         this.Password=Password;
         this.email=email;
-
-
         this.balance=0;
 
         //this.cartProduct=cartProduct;
@@ -139,8 +143,8 @@ public class User implements Serializable{
         return productsList;
     }
 
-    public void setProductsList(Product[] productsList) {
-        this.productsList = productsList;
+    public void setProductsList(Product p) {
+        this.productsList[ProductCount]=p;
     }
 
     public String[] getTransactionHistory() {
@@ -159,6 +163,14 @@ public class User implements Serializable{
         this.orderNotifications = orderNotifications;
     }
 
+
+    public int getProductCount() {
+        return ProductCount;
+    }
+
+    public void setProductCount(int productCount) {
+        ProductCount = productCount;
+    }
 
 
 }

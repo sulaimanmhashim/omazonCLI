@@ -1,17 +1,25 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.IOException;
 public class Main {
     public static boolean loggedIn=false;
     public static User activeUser = greetingscreen();
 
     public static void main(String[] args) {
-        Product product = new Product("Test","Description", 50.5, 2500, 0);
-        Product.SaveToFile(product);
-
+        Scanner s = new Scanner(System.in);
         System.out.println(activeUser.getUsername()+" is logged in.");
         mainscreen();
         while(loggedIn){
-            //do code
+            System.out.println("\t\t\t\t**==============================================================**");
+            System.out.println("\t\t\t\t Welcome user!");
+            System.out.println("\t\t\t\t 1. Sell");
+            System.out.println("\t\t\t\t**==============================================================**");
+            String answer = s.next();
+            if(answer.equals("1")){
+                sell();
+            }
+
         }
 
     }
@@ -84,5 +92,51 @@ public class Main {
         System.out.println("\t\t\t\t**==============================================================**");
         System.out.println("\t\t\t\t Welcome "+activeUser.getUsername()+"! Please enjoy your stay!");
         System.out.println("\t\t\t\t**==============================================================**");
+    }
+    public static void sell(){
+        while(loggedIn) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("\t\t\t\t**==============================================================**");
+            System.out.println("\t\t\t\t Welcome user to the seller perspective!");
+            System.out.println("\t\t\t\t 1. Put up product");
+            System.out.println("\t\t\t\t 2. View existing listings");
+            System.out.println("\t\t\t\t 3. Go back");
+            System.out.println("\t\t\t\t 4. Exit");
+            System.out.println("\t\t\t\t**==============================================================**");
+            String answer = s.next();
+            if(answer.equals("1")){
+                String productName;
+                String description;
+                double price;
+                int stockCount;
+                int salescount = 0;
+
+                System.out.println("Please type the product name:");
+                productName = s.next();
+                System.out.println("Please type the product description:");
+                description = s.next();
+                System.out.println("Please type the product price:");
+                price = Double.parseDouble(s.next());
+                System.out.println("Please type the product stock count:");
+                stockCount = Integer.parseInt(s.next());
+                Product createdProduct = new Product(productName,description,price,stockCount,salescount,activeUser.getUsername());
+                Product.SaveToFile(createdProduct);
+                User.SaveToFile(activeUser);
+
+
+            }
+            if(answer.equals("2")){
+                File folder = new File("C:\\Testu\\PRODUCTS");
+                System.out.println("=======BELOW LIE YOUR PRODUCTS=========");
+
+                for(File fileEntry : folder.listFiles()){
+                    Product p = Product.ReadFromFile(fileEntry.getAbsolutePath());
+                    if(p.getOwnerName().equals(activeUser.getUsername()))
+                    System.out.println(p.getProductName());
+                }
+                s.nextLine();
+            }
+
+        }
     }
 }
