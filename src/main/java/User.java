@@ -1,3 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mycompany.omazoncli;
+
 import java.io.*;
 
 public class User implements Serializable{
@@ -5,7 +12,6 @@ public class User implements Serializable{
     private String Username;
     private String Password;
     private String email;
-    private char gender;
     //Customer
     private double balance;
     private Product[] cartProduct;
@@ -22,7 +28,7 @@ public class User implements Serializable{
         this.Password=Password;
         this.email=email;
 
-        this.gender='m';
+
         this.balance=0;
 
         //this.cartProduct=cartProduct;
@@ -91,13 +97,6 @@ public class User implements Serializable{
 
 
 
-    public char getGender() {
-        return gender;
-    }
-
-    public void setGender(char gender) {
-        this.gender = gender;
-    }
 
     //Customer
 
