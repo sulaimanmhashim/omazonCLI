@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Main {
     public static boolean loggedIn=false;
     public static User activeUser = greetingscreen();
-
+    //todo: implement categories(!)
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         System.out.println(activeUser.getUsername()+" is logged in.");
@@ -13,11 +13,17 @@ public class Main {
         while(loggedIn){
             System.out.println("\t\t\t\t**==============================================================**");
             System.out.println("\t\t\t\t Welcome user!");
-            System.out.println("\t\t\t\t 1. Sell");
+            System.out.println("\t\t\t\t 1. Sell product");
+            System.out.println("\t\t\t\t 2. Buy product");
+            System.out.println("\t\t\t\t 3. List products");
+            System.out.println("\t\t\t\t 4. EXIT");
             System.out.println("\t\t\t\t**==============================================================**");
             String answer = s.next();
             if(answer.equals("1")){
                 sell();
+            }
+            if(answer.equals("4")){
+                loggedIn=false;
             }
 
         }
@@ -111,7 +117,7 @@ public class Main {
                 double price;
                 int stockCount;
                 int salescount = 0;
-
+                //todo: implement categories(!)
                 System.out.println("Please type the product name:");
                 productName = s.next();
                 System.out.println("Please type the product description:");
@@ -135,7 +141,7 @@ public class Main {
                     if(p.getOwnerName().equals(activeUser.getUsername()))
                     System.out.println(p.getProductName());
                 }
-
+//todo: implement categories(!)
             }
             if(answer.equals("3")){
                 File folder = new File("C:\\Testu\\PRODUCTS");
