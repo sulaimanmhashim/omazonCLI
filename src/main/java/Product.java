@@ -27,13 +27,12 @@ public class Product implements Serializable{
         this.ownerName = ownerName;
      //   this.reviews = reviews;
     //    this.bestSelling = bestSelling;
-
     }
     //saveToFile
 
     public static void SaveToFile(Product product){   //add filepath as a parameter
         try{
-            FileOutputStream fileOut = new FileOutputStream("C:\\Testu\\PRODUCTS\\"+product.productName);
+            FileOutputStream fileOut = new FileOutputStream("Testu\\PRODUCTS\\"+product.productName);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(product);
             objectOut.close();
@@ -47,6 +46,7 @@ public class Product implements Serializable{
             FileInputStream fileIn = new FileInputStream(filepath);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
             Product obj = (Product) objectIn.readObject();
+            objectIn.close();
             return obj;
         }catch(Exception e){
             e.printStackTrace();

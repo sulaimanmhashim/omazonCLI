@@ -1,7 +1,5 @@
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.IOException;
 public class Main {
     public static boolean loggedIn=false;
     public static boolean selling=false;
@@ -17,7 +15,8 @@ public class Main {
             System.out.println("\t\t\t\t 1. Sell product");
             System.out.println("\t\t\t\t 2. Buy product");
             System.out.println("\t\t\t\t 3. List products");
-            System.out.println("\t\t\t\t 4. Check balance");
+            System.out.println("\t\t\t\t 5. Check balance");
+            System.out.println("\n\t\t\t\t 9. Log out");
             System.out.println("\t\t\t\t 0. EXIT");
             System.out.println("\t\t\t\t**==============================================================**");
             String answer = s.next();
@@ -25,28 +24,33 @@ public class Main {
                 selling=true;
                 sell();
             }
-            if(answer.equals("0")){
+            if(answer.equals("9")){
                 loggedIn=false;
+                greetingscreen();
             }
-
+            if(answer.equals("0")){
+                System.exit(0);
+            }
         }
 
     }
     public static User greetingscreen(){
         Scanner s = new Scanner(System.in);
         User blankUser = new User("Guest","Guest", "Guest");
+        String ans = "0";
         System.out.println("\t\t\t\t============================================");
         System.out.println("\t\t\t\t Welcome user! Please login or register");
         System.out.println("\t\t\t\t 1. Login");
         System.out.println("\t\t\t\t 2. Register");
         System.out.println("\t\t\t\t Press any other key to quit.");
         System.out.println("\t\t\t\t============================================");
-        if(s.next().equals("1")){
+        ans = s.next();
+        if(ans.equals("1")){
             return login();
-        } else if(s.next().equals("2")){
+        } else if(ans.equals("2")){
             register();
         }else{
-
+            System.exit(0);
         }
         return blankUser;
     }
@@ -58,9 +62,11 @@ public class Main {
         System.out.println("\t\t\t\t**==============================================================**");
         System.out.println("\t\t\t\t Welcome user! Please enter your username and then password");
         System.out.println("\t\t\t\t**==============================================================**");
+        System.out.println("Please enter your username: ");
         username = s.next();
+        System.out.println("Please enter your password: ");
         password = s.next();
-        File folder = new File("C:\\Testu\\USERNAMES");
+        File folder = new File("Testu\\USERNAMES");
         for(File fileEntry : folder.listFiles()){
             User u = (User) User.ReadFromFile(fileEntry.getAbsolutePath());
             if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
@@ -70,10 +76,8 @@ public class Main {
                 System.out.println("Wrong username or password!");
                 loggedIn=false;
             }
-
         }
-    return blankUser;
-
+        return blankUser;
     }
     public static void register(){
         Scanner s = new Scanner(System.in);
@@ -83,19 +87,32 @@ public class Main {
         String username;
         String password;
         String email;
+        File folder = new File("Testu\\USERNAMES");
         System.out.println("Please enter your username: ");
         username = s.next();
+        for(File fileEntry : folder.listFiles()){
+            User u = (User) User.ReadFromFile(fileEntry.getAbsolutePath());
+            if(username.equals(u.getUsername())){
+                System.out.println("Username taken.");
+                register();
+            }
+        }
         System.out.println("Please enter your password: ");
         password = s.next();
         System.out.println("Please enter your email: ");
         email = s.next();
+        for(File fileEntry : folder.listFiles()){
+            User u = (User) User.ReadFromFile(fileEntry.getAbsolutePath());
+            if(username.equals(u.getEmail())){
+                System.out.println("Email taken.");
+                register();
+            }
+        }
 
         User user = new User(username, password, email);
         User.SaveToFile(user);
-
-
-
-
+        
+        login();
     }
     public static void mainscreen(){
         System.out.println("\t\t\t\t**==============================================================**");
@@ -122,9 +139,9 @@ public class Main {
                 int salescount = 0;
                 //todo: implement categories(!)
                 System.out.println("Please type the product name:");
-                productName = s.next();
+                productName = s.nextLine();
                 System.out.println("Please type the product description:");
-                description = s.next();
+                description = s.nextLine();
                 System.out.println("Please type the product price:");
                 price = Double.parseDouble(s.next());
                 System.out.println("Please type the product stock count:");
@@ -133,10 +150,9 @@ public class Main {
                 Product.SaveToFile(createdProduct);
                 User.SaveToFile(activeUser);
 
-
             }
             if(answer.equals("2")){
-                File folder = new File("C:\\Testu\\PRODUCTS");
+                File folder = new File("Testu\\PRODUCTS");
                 System.out.println("\t\t\t\t =======BELOW LIE YOUR PRODUCTS=========");
 
                 for(File fileEntry : folder.listFiles()){
@@ -147,7 +163,7 @@ public class Main {
 //todo: implement categories(!)
             }
             if(answer.equals("3")){
-                File folder = new File("C:\\Testu\\PRODUCTS");
+                File folder = new File("Testu\\PRODUCTS");
                 System.out.println("\t\t\t\t =======BELOW LIE YOUR PRODUCTS=========");
                 Scanner scanner = new Scanner(System.in);
                 String ans;
@@ -157,34 +173,38 @@ public class Main {
                         System.out.println(p.getProductName());
                 }
                 System.out.println("\t\t\t\t =======WRITE THE FULL NAME OF PRODUCT TO EDIT=========");
+                System.out.println("\t\t\t\t Enter 0 to go back");
                 ans = s.next();
-                for(File fileEntry : folder.listFiles()){
-                    Product p = Product.ReadFromFile(fileEntry.getAbsolutePath());
-                    if(p.getOwnerName().equals(activeUser.getUsername()) && p.getProductName().equals(ans)){
-                        String description;
-                        double price;
-                        int stockCount;
+                if(ans.equals("0")){
+                    sell();
+                }else{
+                    for(File fileEntry : folder.listFiles()){
+                        Product p = Product.ReadFromFile(fileEntry.getAbsolutePath());
+                        if(p.getOwnerName().equals(activeUser.getUsername()) && p.getProductName().equals(ans)){
+                            String description;
+                            double price;
+                            int stockCount;
 
-                        System.out.println("Please type the product description:");
-                        description = s.next();
-                        System.out.println("Please type the product price:");
-                        price = Double.parseDouble(s.next());
-                        System.out.println("Please type the product stock count:");
-                        stockCount = Integer.parseInt(s.next());
-                        p.setDescription(description);
-                        p.setPrice(price);
-                        p.setStockCount(stockCount);
-                        Product.SaveToFile(p);
-
-
-
+                            System.out.println("Please type the product description:");
+                            String catchline = s.nextLine();
+                            description = s.nextLine();
+                            System.out.println("Please type the product price:");
+                            price = Double.parseDouble(s.next());
+                            System.out.println("Please type the product stock count:");
+                            stockCount = Integer.parseInt(s.next());
+                            p.setDescription(description);
+                            p.setPrice(price);
+                            p.setStockCount(stockCount);
+                            Product.SaveToFile(p);
+                        }
                     }
-
                 }
-
             }
             if(answer.equals("4")){
                 selling=false;
+            }
+            if(answer.equals("5")){
+                System.exit(0);
             }
 
         }
