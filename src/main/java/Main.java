@@ -23,12 +23,12 @@ public class Main {
             if(answer.equals("1")){
                 selling=true;
                 sell();
-            }
+            }else 
+            
             if(answer.equals("9")){
                 loggedIn=false;
                 greetingscreen();
-            }
-            if(answer.equals("0")){
+            }else if(answer.equals("0")){
                 System.exit(0);
             }
         }
@@ -128,7 +128,7 @@ public class Main {
             System.out.println("\t\t\t\t 2. View existing listings");
             System.out.println("\t\t\t\t 3. Edit existing listings");
             System.out.println("\t\t\t\t 4. Go back");
-            System.out.println("\t\t\t\t 5. Exit");
+            System.out.println("\t\t\t\t 0. Exit");
             System.out.println("\t\t\t\t**==============================================================**");
             String answer = s.next();
             if(answer.equals("1")){
@@ -137,16 +137,32 @@ public class Main {
                 double price;
                 int stockCount;
                 int salescount = 0;
+                String category;
                 //todo: implement categories(!)
                 System.out.println("Please type the product name:");
-                productName = s.nextLine();
+                productName = s.next();
                 System.out.println("Please type the product description:");
+                String catchline = s.nextLine();
                 description = s.nextLine();
                 System.out.println("Please type the product price:");
                 price = Double.parseDouble(s.next());
                 System.out.println("Please type the product stock count:");
                 stockCount = Integer.parseInt(s.next());
-                Product createdProduct = new Product(productName,description,price,stockCount,salescount,activeUser.getUsername());
+                //category
+                System.out.println("\t\t\t\t**==============================================================**");
+                System.out.println("\t\t\t\tCategories:");
+                System.out.println("\t\t\t\t 1. Sports and Outdoor");
+                System.out.println("\t\t\t\t 2. Games and Hobbies");
+                System.out.println("\t\t\t\t 3. Machines and Gadgets");
+                System.out.println("\t\t\t\t 4. Fashion and Accessories (men)");
+                System.out.println("\t\t\t\t 5. Fashion and Accessories (women)");
+                System.out.println("\t\t\t\t 6. Home and Living");
+                System.out.println("\t\t\t\t 0. Other");
+                System.out.println("\t\t\t\t**==============================================================**");
+                System.out.println("Choose a category for your products:");
+                category=s.next();
+                //-------------------------------//
+                Product createdProduct = new Product(productName,description,price,stockCount,salescount,category,activeUser.getUsername());
                 Product.SaveToFile(createdProduct);
                 User.SaveToFile(activeUser);
 
@@ -181,7 +197,7 @@ public class Main {
                     for(File fileEntry : folder.listFiles()){
                         Product p = Product.ReadFromFile(fileEntry.getAbsolutePath());
                         if(p.getOwnerName().equals(activeUser.getUsername()) && p.getProductName().equals(ans)){
-                            String description;
+                            String description, category;
                             double price;
                             int stockCount;
 
@@ -192,6 +208,21 @@ public class Main {
                             price = Double.parseDouble(s.next());
                             System.out.println("Please type the product stock count:");
                             stockCount = Integer.parseInt(s.next());
+                            
+                            System.out.println("\t\t\t\t**==============================================================**");
+                            System.out.println("\t\t\t\tCategories:");
+                            System.out.println("\t\t\t\t 1. Sports and Outdoor");
+                            System.out.println("\t\t\t\t 2. Games and Hobbies");
+                            System.out.println("\t\t\t\t 3. Machines and Gadgets");
+                            System.out.println("\t\t\t\t 4. Fashion and Accessories (men)");
+                            System.out.println("\t\t\t\t 5. Fashion and Accessories (women)");
+                            System.out.println("\t\t\t\t 6. Home and Living");
+                            System.out.println("\t\t\t\t 0. Other");
+                            System.out.println("\t\t\t\t**==============================================================**");
+                            System.out.println("Choose a category for your products:");
+                            category=s.next();
+
+                            p.setCategory(category);
                             p.setDescription(description);
                             p.setPrice(price);
                             p.setStockCount(stockCount);
@@ -203,7 +234,7 @@ public class Main {
             if(answer.equals("4")){
                 selling=false;
             }
-            if(answer.equals("5")){
+            if(answer.equals("0")){
                 System.exit(0);
             }
 
